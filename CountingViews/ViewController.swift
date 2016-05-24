@@ -16,6 +16,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var easeOutLabel: CountingLabel!
     @IBOutlet weak var easeInOutLabel: CountingLabel!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        easeInLabel.startCounting(destinationValue: 500, duration: 0.0)
+    }
+    
     @IBAction func startCounting(sender: AnyObject) {
         
         
@@ -39,7 +45,7 @@ class ViewController: UIViewController {
         })
         
         easeInLabel.numberFormatter = formatter
-        easeInLabel.startCounting(0, destinationValue: 10000, duration: 3.0, method: .EaseIn, progress: { value in print(value) })
+        easeInLabel.startCounting(easeInLabel.currentValue, destinationValue: 1000, duration: 3.0, method: .EaseIn, progress: { value in print(value) })
         
         easeOutLabel.numberFormatter = formatter
         easeOutLabel.startCounting(destinationValue: 10000, duration: 3.0, method: .EaseOut)
