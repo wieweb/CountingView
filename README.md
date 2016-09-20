@@ -1,7 +1,7 @@
 # CountingView
 
 ![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)
-![Swift 2.2](https://img.shields.io/badge/Swift-2.2-orange.svg)
+![Swift 2.2](https://img.shields.io/badge/Swift-2.3-orange.svg)
 
 Inspired by [UICountingLabel](https://github.com/dataxpress/UICountingLabel) this is a swift version of an animated counting label.
 
@@ -69,8 +69,16 @@ This class also provide ```startCount``` with a ```progress```and ```completion`
 
 Add the following line to your [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile).
 
+####Swift 2.3
+
 ```
-github "wieweb/CountingView" ~> 1.0
+github "wieweb/CountingView" ~> 1.1
+```
+
+####Swift 3.0
+
+```
+github "wieweb/CountingView" "swift3.0"
 ```
 
 Then run `carthage update`.
