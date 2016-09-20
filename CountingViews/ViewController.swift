@@ -22,12 +22,12 @@ class ViewController: UIViewController {
         easeInLabel.startCounting(destinationValue: 500, duration: 0.0)
     }
     
-    @IBAction func startCounting(sender: AnyObject) {
+    @IBAction func startCounting(_ sender: AnyObject) {
         
         
-        let formatter = NSNumberFormatter()
+        let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 0;
-        formatter.numberStyle = .DecimalStyle
+        formatter.numberStyle = .decimal
         formatter.groupingSeparator = "."
         
         linealLabel.format = "%@ Value"
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         linealLabel.startCounting(0,
                                   destinationValue: 1000,
                                   duration: 3,
-                                  method: .Linear,
+                                  method: .linear,
                                   progress: { value in
                                     print(value)
                                     },
@@ -44,13 +44,13 @@ class ViewController: UIViewController {
         })
         
         easeInLabel.numberFormatter = formatter
-        easeInLabel.startCounting(easeInLabel.currentValue, destinationValue: 1505, duration: 3.0, method: .EaseIn, progress: { value in print(value) })
+        easeInLabel.startCounting(0.0, destinationValue: 1505, duration: 3.0, method: .easeIn, progress: { value in print(value) })
         
         easeOutLabel.numberFormatter = formatter
-        easeOutLabel.startCounting(destinationValue: 10000, duration: 3.0, method: .EaseOut)
+        easeOutLabel.startCounting(destinationValue: 10000, duration: 3.0, method: .easeOut)
         
         easeInOutLabel.numberFormatter = formatter
-        easeInOutLabel.startCounting(10000, destinationValue: 0, duration: 3.0, method: .EaseInOut)
+        easeInOutLabel.startCounting(10000, destinationValue: 0, duration: 3.0, method: .easeInOut)
         
     }
     

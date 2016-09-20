@@ -8,28 +8,28 @@
 
 import Foundation
 
-public class CountAnimator {
+open class CountAnimator {
     
-    private let startingValue: Double
-    private let destinationValue: Double
-    private let duration: NSTimeInterval
-    private let updateMethod: CountAnimatorMethod
+    fileprivate let startingValue: Double
+    fileprivate let destinationValue: Double
+    fileprivate let duration: TimeInterval
+    fileprivate let updateMethod: CountAnimatorMethod
     
-    private var timer: CADisplayLink? = nil
-    private var progressValue: Double = 0
-    private var lastUpdate: NSTimeInterval = 0
+    fileprivate var timer: CADisplayLink? = nil
+    fileprivate var progressValue: Double = 0
+    fileprivate var lastUpdate: TimeInterval = 0
     
-    private var completion: (() -> ())? = nil
-    private var progress: ((value: Double) -> ())!
+    fileprivate var completion: (() -> ())? = nil
+    fileprivate var progress: ((_ value: Double) -> ())!
     
-    public init(startValue: Double = 0.0, destinationValue: Double, duration: NSTimeInterval, method: CountAnimatorMethod = .Linear) {
+    public init(startValue: Double = 0.0, destinationValue: Double, duration: TimeInterval, method: CountAnimatorMethod = .linear) {
         self.startingValue = startValue
         self.destinationValue = destinationValue
         self.duration = duration
         self.updateMethod = method
     }
     
-    public func startCount(progress: (value: Double) -> (), completion: (() -> ())? = nil) {
+    open func startCount(_ progress: @escaping (_ value: Double) -> (), completion: (() -> ())? = nil) {
         
         self.progress = progress
         self.completion = completion
@@ -42,7 +42,7 @@ public class CountAnimator {
         
         if progressValue >= duration {
             // No animation
-            progress(value: destinationValue)
+            progress(destinationValue)
             if let completion = completion {
                 completion()
             }
@@ -50,25 +50,25 @@ public class CountAnimator {
         }
         
         progressValue = 0
-        lastUpdate = NSDate.timeIntervalSinceReferenceDate()
+        lastUpdate = Date.timeIntervalSinceReferenceDate
         
         let timer: CADisplayLink = CADisplayLink(target: self, selector: #selector(CountAnimator.updateProgress))
         
         timer.frameInterval = 2;
-        timer.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
-        timer.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: UITrackingRunLoopMode)
+        timer.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
+        timer.add(to: RunLoop.main, forMode: RunLoopMode.UITrackingRunLoopMode)
         self.timer = timer;
         
     }
     
-    @objc public func updateProgress() {
+    @objc open func updateProgress() {
         
         // update progress
-        let now: NSTimeInterval = NSDate.timeIntervalSinceReferenceDate()
+        let now: TimeInterval = Date.timeIntervalSinceReferenceDate
         progressValue += now - lastUpdate;
         lastUpdate = now
         
-        progress(value: currentValue(progressValue, duration: duration, start: startingValue, destination: destinationValue, method: updateMethod))
+        progress(currentValue(progressValue, duration: duration, start: startingValue, destination: destinationValue, method: updateMethod))
         
         if progressValue >= duration {
             progressValue = duration
@@ -83,7 +83,7 @@ public class CountAnimator {
         }
     }
     
-    private func currentValue(progress: Double, duration: NSTimeInterval, start: Double, destination: Double, method: CountAnimatorMethod) -> Double {
+    fileprivate func currentValue(_ progress: Double, duration: TimeInterval, start: Double, destination: Double, method: CountAnimatorMethod) -> Double {
         if (progress >= duration) {
             return destination
         }
@@ -99,20 +99,20 @@ public class CountAnimator {
 
 public enum CountAnimatorMethod {
     
-    case Linear
-    case EaseIn
-    case EaseOut
-    case EaseInOut
+    case linear
+    case easeIn
+    case easeOut
+    case easeInOut
     
-    private func update(value: Double, rate: Float) -> Double {
+    fileprivate func update(_ value: Double, rate: Float) -> Double {
         switch self {
-        case .Linear:
+        case .linear:
             return value
-        case .EaseIn:
+        case .easeIn:
             return Double(powf(Float(value), rate))
-        case .EaseOut:
+        case .easeOut:
             return Double(1.0 - powf((1.0 - Float(value)), rate))
-        case .EaseInOut:
+        case .easeInOut:
             var sign: Int = 1
             let r: Int = Int(rate)
             if r % 2 == 0 {
