@@ -26,7 +26,6 @@ class ViewController: UIViewController {
         
         
         let formatter = NSNumberFormatter()
-        formatter.minimumIntegerDigits = 5
         formatter.maximumFractionDigits = 0;
         formatter.numberStyle = .DecimalStyle
         formatter.groupingSeparator = "."
@@ -45,7 +44,7 @@ class ViewController: UIViewController {
         })
         
         easeInLabel.numberFormatter = formatter
-        easeInLabel.startCounting(easeInLabel.currentValue, destinationValue: 1000, duration: 3.0, method: .EaseIn, progress: { value in print(value) })
+        easeInLabel.startCounting(easeInLabel.currentValue, destinationValue: 1505, duration: 3.0, method: .EaseIn, progress: { value in print(value) })
         
         easeOutLabel.numberFormatter = formatter
         easeOutLabel.startCounting(destinationValue: 10000, duration: 3.0, method: .EaseOut)
